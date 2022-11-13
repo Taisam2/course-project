@@ -1,5 +1,6 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/models/recipe.model';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -7,21 +8,13 @@ import { Recipe } from 'src/app/models/recipe.model';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
-  @Output() transmitSelectedRecipe = new EventEmitter<Recipe>();
-  recipes: Recipe[] = [
-    new Recipe('Test Recipe', 'Cake with chocolate', 'https://www.thespruceeats.com/thmb/pn4JQhIbIgi0mb_FFkl0Bd_aU_s=/940x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/homemade-raw-vegan-chocolate-recipe-3377425-hero-01-e1ed575a419e4a9a9bc94f3bb1ed1d97.jpg'),
-    new Recipe('Test Recipe 2', 'Cake with chocolate', 'https://www.thespruceeats.com/thmb/pn4JQhIbIgi0mb_FFkl0Bd_aU_s=/940x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/homemade-raw-vegan-chocolate-recipe-3377425-hero-01-e1ed575a419e4a9a9bc94f3bb1ed1d97.jpg'),
-    new Recipe('Test Recipe 3', 'Cake with chocolate', 'https://www.thespruceeats.com/thmb/pn4JQhIbIgi0mb_FFkl0Bd_aU_s=/940x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/homemade-raw-vegan-chocolate-recipe-3377425-hero-01-e1ed575a419e4a9a9bc94f3bb1ed1d97.jpg'),
-  ];
+  recipes: Recipe[];
 
 
-
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
+    this.recipes = this.recipeService.getRecipes();
   }
 
-  detectSelectedItem(selectedRecipe: Recipe) {
-    this.transmitSelectedRecipe.emit(selectedRecipe);
-  }
 }
